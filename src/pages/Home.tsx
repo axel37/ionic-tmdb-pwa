@@ -1,11 +1,9 @@
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 import TmdbCredits from "../components/TmdbCredits/TmdbCredits";
-import testTmdbApi from "../service/tmdb";
+import MovieById from "../components/MovieById/MovieById";
 
 const Home: React.FC = () => {
-    testTmdbApi();
     return (
         <IonPage>
             <IonHeader>
@@ -19,7 +17,7 @@ const Home: React.FC = () => {
                         <IonTitle size="large">Blank</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <ExploreContainer/>
+                <MovieById id="813"/>
                 <TmdbCredits/>
             </IonContent>
         </IonPage>

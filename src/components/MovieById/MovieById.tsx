@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {MovieResponse} from "moviedb-promise";
-import {Movie, Tmdb} from "../../service/Tmdb";
+import {Tmdb} from "../../service/Tmdb";
+import {Movie} from "../../domain/Movie";
 
 interface Props {
     id: string

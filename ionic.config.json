@@ -1,0 +1,7 @@
+{
+  "name": "supinfo-4HYBD-tp2-tmdb",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

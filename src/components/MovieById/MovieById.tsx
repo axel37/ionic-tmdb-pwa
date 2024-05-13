@@ -1,24 +1,25 @@
 import React, {useEffect, useState} from "react";
-import {details} from "../../service/tmdb";
 import {MovieResponse} from "moviedb-promise";
+import {Movie, Tmdb} from "../../service/Tmdb";
 
 interface Props {
     id: string
 }
 
 export default function MovieById({id}: Props): JSX.Element {
-    const [result, setResult] = useState<MovieResponse>([]);
+    const tmdb = new Tmdb();
+    const [movie, setMovie] = useState<Movie>([]);
     useEffect(() => {
         (async () => {
-            const movieResponse = await details(id);
-            console.log(movieResponse);
-            setResult(movieResponse);
+            const movie = await tmdb.findById(id);
+            console.log(movie);
+            setMovie(movie);
         })();
     }, []);
     return (
         <>
-            <p>{result.original_title}</p>
-            {/*<img src={"https://www.themoviedb.org" + result.poster_path}/>*/}
+            <p>{movie.title}</p>
+            <img src={movie.imageUrl}/>
         </>
     );
 }

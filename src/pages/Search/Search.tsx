@@ -1,21 +1,10 @@
-import {
-    IonContent,
-    IonHeader,
-    IonInput, IonItem, IonList,
-    IonPage,
-    IonSearchbar,
-    IonTitle,
-    IonToolbar,
-    SearchbarInputEventDetail
-} from "@ionic/react";
+import {IonContent, IonHeader, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar} from "@ionic/react";
 import {useEffect, useState} from "react";
 import {MovieResult} from "moviedb-promise";
-import {Tmdb} from "../../service/Tmdb";
 import MovieListItem from "../../components/MovieListItem/MovieListItem";
+import tmdb from "../../service/Tmdb";
 
 export default function Search() {
-    // TODO : TMDB should be a singleton
-    const tmdb = new Tmdb();
     const [movies, setMovies] = useState<MovieResult[]>([]);
     const [query, setQuery] = useState<string>('');
 

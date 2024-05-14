@@ -1,15 +1,21 @@
 import {ConfigurationResponse, MovieResponse} from "moviedb-promise";
 
+/**
+ * Wraps an API response containing Movie data and provide helper methods
+ */
 export class Movie {
-    title: string
-    imageUrl: string
+    public data: MovieResponse
+    private configuration: ConfigurationResponse
 
     constructor(response: MovieResponse, configuration: ConfigurationResponse) {
-        this.title = response.title;
-        this.imageUrl = this.createImageUrl(configuration.images.secure_base_url, configuration.images.poster_sizes[1], response.poster_path);
+        this.data = response;
+        this.configuration = configuration;
     }
 
-    createImageUrl(basePath: string, size: string, url: string): string {
-        return basePath + size + url;
+    /**
+     * Returns a valid image url
+     */
+    public fullImageUrl(): string {
+        return this.configuration.images.secure_base_url + this.configuration.images.poster_sizes[2] + this.data.poster_path;
     }
 }

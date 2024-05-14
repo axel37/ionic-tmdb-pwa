@@ -1,14 +1,28 @@
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import './Home.css';
 import TmdbCredits from "../components/TmdbCredits/TmdbCredits";
-import MovieById from "../components/MovieById/MovieById";
+import {useEffect, useState} from "react";
+import {Movie} from "../domain/Movie";
+import {Tmdb} from "../service/Tmdb";
+import MovieCard from "../components/MovieCard/MovieCard";
 
 const Home: React.FC = () => {
+    const tmdb = new Tmdb();
+    const [movie, setMovie] = useState<Movie>([]);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const movie = await tmdb.findById(813);
+    //         console.log(movie);
+    //         setMovie(movie);
+    //     })();
+    // }, []);
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Blank</IonTitle>
+                    <IonTitle>Ionic TMDB</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -17,7 +31,7 @@ const Home: React.FC = () => {
                         <IonTitle size="large">Blank</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <MovieById id="813"/>
+                {/*<MovieCard movie={movie}/>*/}
                 <TmdbCredits/>
             </IonContent>
         </IonPage>

@@ -1,10 +1,21 @@
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonFooter,
+    IonHeader,
+    IonIcon,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/react';
 import './Home.css';
 import TmdbCredits from "../components/TmdbCredits/TmdbCredits";
 import {useEffect, useState} from "react";
 import {Movie} from "../domain/Movie";
 import {Tmdb} from "../service/Tmdb";
 import MovieCard from "../components/MovieCard/MovieCard";
+import {search} from "ionicons/icons";
 
 const Home: React.FC = () => {
     const tmdb = new Tmdb();
@@ -32,8 +43,17 @@ const Home: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 {movie && <MovieCard movie={movie}/>}
-                <TmdbCredits/>
+                <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                    <IonFabButton routerLink="/search">
+                        <IonIcon icon={search}></IonIcon>
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
+            <IonFooter>
+                <IonToolbar>
+                    <TmdbCredits/>
+                </IonToolbar>
+            </IonFooter>
         </IonPage>
     );
 };

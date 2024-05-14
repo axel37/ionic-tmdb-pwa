@@ -8,13 +8,15 @@ interface Props {
 export default function MovieCard({movie}: Props): JSX.Element {
     return (
         <IonCard>
+            <img src={movie.fullImageUrl()} alt="The movie's poster."/>
+
             <IonCardHeader>
                 <IonCardTitle>{movie.data.title}</IonCardTitle>
                 <IonCardSubtitle>{movie.data.release_date}</IonCardSubtitle>
             </IonCardHeader>
 
             <IonCardContent>
-                <img src={movie.fullImageUrl()} alt="The movie's poster."/>
+                Hello :)
             </IonCardContent>
         </IonCard>
     );

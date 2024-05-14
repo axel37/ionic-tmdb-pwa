@@ -1,4 +1,4 @@
-import {ConfigurationResponse, MovieDb, MovieResultsResponse, SearchMovieRequest} from "moviedb-promise";
+import {ConfigurationResponse, MovieDb, MovieResult, MovieResultsResponse, SearchMovieRequest} from "moviedb-promise";
 import {Movie} from "../domain/Movie";
 
 export class Tmdb {
@@ -18,6 +18,11 @@ export class Tmdb {
         const response = await this.api.movieInfo({id: id});
         const config = await this.configurationPromise;
         return new Movie(response, config);
+    }
+
+    public async searchMovies(search: string): Promise<MovieResult[]> {
+        const response = await this.api.searchMovie({query: search});
+        return response.results ?? [];
     }
 }
 

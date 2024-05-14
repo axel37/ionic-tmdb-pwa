@@ -8,16 +8,16 @@ import MovieCard from "../components/MovieCard/MovieCard";
 
 const Home: React.FC = () => {
     const tmdb = new Tmdb();
-    const [movie, setMovie] = useState<Movie>([]);
+    const [movie, setMovie] = useState<Movie>();
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const movie = await tmdb.findById(813);
-    //         console.log(movie);
-    //         setMovie(movie);
-    //     })();
-    // }, []);
-
+    useEffect(() => {
+        (async () => {
+            const movie = await tmdb.findById(813);
+            console.log(movie);
+            setMovie(movie);
+        })();
+    }, []);
+    debugger;
     return (
         <IonPage>
             <IonHeader>
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
                         <IonTitle size="large">Blank</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {/*<MovieCard movie={movie}/>*/}
+                {movie && <MovieCard movie={movie}/>}
                 <TmdbCredits/>
             </IonContent>
         </IonPage>

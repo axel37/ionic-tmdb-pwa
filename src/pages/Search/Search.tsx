@@ -1,11 +1,11 @@
 import {IonContent, IonHeader, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar} from "@ionic/react";
 import {useEffect, useState} from "react";
-import {MovieResult} from "moviedb-promise";
 import MovieListItem from "../../components/MovieListItem/MovieListItem";
 import tmdb from "../../service/Tmdb";
+import {Movie} from "../../domain/Movie";
 
 export default function Search() {
-    const [movies, setMovies] = useState<MovieResult[]>([]);
+    const [movies, setMovies] = useState<Movie[]>([]);
     const [query, setQuery] = useState<string>('');
 
     useEffect(() => {
@@ -29,16 +29,17 @@ export default function Search() {
                 <IonToolbar>
                     <IonTitle>Search</IonTitle>
                 </IonToolbar>
+                <IonToolbar>
+                    <IonSearchbar
+                        placeholder="The kentucky fried movie"
+                        showClearButton="always"
+                        debounce={1000}
+                        onIonInput={(ev) => handleInput(ev)}
+                    >
+                    </IonSearchbar>
+                </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonSearchbar
-                    placeholder="The kentucky fried movie"
-                    showClearButton="always"
-                    debounce={1000}
-                    onIonInput={(ev) => handleInput(ev)}
-                >
-                </IonSearchbar>
-
                 <IonList>
                     {movies.map(movie => (
                         <MovieListItem movie={movie}></MovieListItem>

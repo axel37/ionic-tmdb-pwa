@@ -1,15 +1,19 @@
 import {IonIcon, IonItem} from "@ionic/react";
-import {MovieResult} from "moviedb-promise";
-import {image, listCircle} from "ionicons/icons";
+import {MovieInterface} from "../../domain/MovieInterface";
+import {image} from "ionicons/icons";
 
 interface Props {
-    movie: MovieResult
+    movie: MovieInterface
 }
 
 export default function MovieListItem({movie}: Props) {
     return (
         <IonItem key={movie.id} button={true} detail={true}>
-            <IonIcon color="danger" slot="start" icon={image} size="large"></IonIcon>
+            {movie.has_poster ?
+                <img src={movie.poster_url_thumb} alt={"Poster for " + movie.title} slot="start"
+                     style={{width: '50px', height: '50px'}}/>
+                : <IonIcon color="danger" slot="start" icon={image}></IonIcon>
+            }
             {movie.title}
         </IonItem>
     )

@@ -1,4 +1,4 @@
-import {ConfigurationResponse, MovieDb, MovieResult} from "moviedb-promise";
+import {ConfigurationResponse, MovieDb} from "moviedb-promise";
 import {Movie} from "../domain/Movie";
 
 class Tmdb {
@@ -7,7 +7,7 @@ class Tmdb {
     private api: MovieDb;
     private configurationPromise: Promise<ConfigurationResponse>;
     private movieCache: Map<string, Movie>;
-    private searchCache: Map<string, MovieResult[]>;
+    private searchCache: Map<string, Movie[]>;
 
 
     private constructor() {
@@ -42,13 +42,15 @@ class Tmdb {
         return movie;
     }
 
-    public async searchMovies(search: string): Promise<MovieResult[]> {
+    public async searchMovies(search: string): Promise<Movie[]> {
         if (this.searchCache.has(search)) {
             console.log(`Found cache results for search ${search}`);
             return this.searchCache.get(search);
         }
         const response = await this.api.searchMovie({query: search});
-        const list = response.results ?? [];
+        const config = await this.configurationPromise;
+        // Turn every result into a Movie object
+        const list = (response.results ?? []).map(result => new Movie(result, config));
         this.searchCache.set(search, list);
         return list;
     }

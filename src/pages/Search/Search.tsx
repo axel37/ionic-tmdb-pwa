@@ -45,7 +45,7 @@ export default function Search() {
                 </IonToolbar>
                 <IonToolbar>
                     <IonSearchbar
-                        placeholder="The kentucky fried movie"
+                        placeholder="Airplane!"
                         showClearButton="always"
                         debounce={500}
                         onIonInput={(ev) => handleInput(ev)}

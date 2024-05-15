@@ -26,7 +26,6 @@ export default function MovieDetails({movie}: Props): JSX.Element {
             <IonNote>{movie.release_date}</IonNote>
             <br/>
             <IonButton id="open-modal" fill="outline">
-                {/* TODO : Make poster smaller. It must be obvious that it can be clicked ! */}
                 <img src={movie.poster_url_small} alt="The movie's poster."/>
             </IonButton>
             <p>{movie.overview}</p>

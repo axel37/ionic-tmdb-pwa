@@ -30,7 +30,7 @@ export default function Search() {
                     <IonTitle>Search</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent>
+            <IonContent className="ion-padding">
                 <IonSearchbar
                     placeholder="The kentucky fried movie"
                     showClearButton="always"

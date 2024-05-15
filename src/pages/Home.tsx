@@ -5,6 +5,7 @@ import {
     IonFooter,
     IonHeader,
     IonIcon,
+    IonLabel,
     IonPage,
     IonTitle,
     IonToolbar
@@ -13,7 +14,6 @@ import './Home.css';
 import TmdbCredits from "../components/TmdbCredits/TmdbCredits";
 import {useEffect, useState} from "react";
 import {Movie} from "../domain/Movie";
-import MovieCard from "../components/MovieCard/MovieCard";
 import {search} from "ionicons/icons";
 import tmdb from "../service/Tmdb";
 
@@ -41,7 +41,9 @@ const Home: React.FC = () => {
                         <IonTitle size="large">Blank</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                {movie && <MovieCard movie={movie}/>}
+                <IonLabel>
+                    Tap the search icon to look for movies !
+                </IonLabel>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     <IonFabButton routerLink="/search">
                         <IonIcon icon={search}></IonIcon>

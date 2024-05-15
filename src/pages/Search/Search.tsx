@@ -1,5 +1,6 @@
 import {
     IonContent,
+    IonFooter,
     IonHeader,
     IonList,
     IonPage,
@@ -12,6 +13,7 @@ import {useEffect, useState} from "react";
 import MovieListItem from "../../components/MovieListItem/MovieListItem";
 import tmdb from "../../service/Tmdb";
 import {Movie} from "../../domain/Movie";
+import TmdbCredits from "../../components/TmdbCredits/TmdbCredits";
 
 export default function Search() {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -45,7 +47,7 @@ export default function Search() {
                     <IonSearchbar
                         placeholder="The kentucky fried movie"
                         showClearButton="always"
-                        debounce={1000}
+                        debounce={500}
                         onIonInput={(ev) => handleInput(ev)}
                     >
                     </IonSearchbar>
@@ -59,6 +61,9 @@ export default function Search() {
                     ))}
                 </IonList>
             </IonContent>
+            <IonFooter>
+                <TmdbCredits></TmdbCredits>
+            </IonFooter>
         </IonPage>
     );
 }

@@ -1,4 +1,13 @@
-import {IonContent, IonHeader, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar} from "@ionic/react";
+import {
+    IonContent,
+    IonHeader,
+    IonList,
+    IonPage,
+    IonProgressBar,
+    IonSearchbar,
+    IonTitle,
+    IonToolbar
+} from "@ionic/react";
 import {useEffect, useState} from "react";
 import MovieListItem from "../../components/MovieListItem/MovieListItem";
 import tmdb from "../../service/Tmdb";
@@ -7,10 +16,13 @@ import {Movie} from "../../domain/Movie";
 export default function Search() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [query, setQuery] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchMovies = async () => {
+            setIsLoading(true);
             setMovies(await tmdb.searchMovies(query));
+            setIsLoading(false)
         };
         fetchMovies();
     }, [query]); // Run effect whenever query changes
@@ -37,6 +49,7 @@ export default function Search() {
                         onIonInput={(ev) => handleInput(ev)}
                     >
                     </IonSearchbar>
+                    {isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>}
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">

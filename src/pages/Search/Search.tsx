@@ -14,10 +14,11 @@ import MovieListItem from "../../components/MovieListItem/MovieListItem";
 import tmdb from "../../service/Tmdb";
 import TmdbCredits from "../../components/TmdbCredits/TmdbCredits";
 import useAsync from "../../hooks/useAsync";
+import {MovieInterface} from "../../domain/MovieInterface";
 
 export default function Search() {
     const [query, setQuery] = useState<string>('');
-    const {data: movies, isLoading} = useAsync(() => tmdb.searchMovies(query), [query], []);
+    const {data: movies, isLoading} = useAsync<MovieInterface[]>(() => tmdb.searchMovies(query), [query], []);
 
     const handleInput = (ev: Event) => {
         const target = ev.target as HTMLIonSearchbarElement;
@@ -28,8 +29,7 @@ export default function Search() {
     }
 
     const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
-    // Todo : Fix type error
-    const movieListItems = movies.map(movie => (
+    const movieListItems = movies.map((movie) => (
         <MovieListItem movie={movie}></MovieListItem>
     ));
     return (

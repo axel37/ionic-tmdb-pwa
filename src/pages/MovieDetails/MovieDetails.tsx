@@ -6,12 +6,15 @@ import {
     IonButtons,
     IonContent,
     IonHeader,
+    IonIcon,
     IonPage,
     IonProgressBar,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
 import useAsync from "../../hooks/useAsync";
+import {build} from "ionicons/icons";
+import {MovieInterface} from "../../domain/MovieInterface";
 
 interface RouteParams {
     id: string;
@@ -19,10 +22,17 @@ interface RouteParams {
 
 export default function MovieDetailsPage(): JSX.Element {
     const {id} = useParams<RouteParams>();
-    const {data: movie, isLoading} = useAsync(() => tmdb.findById(id), [id]);
+    const {data: movie, isLoading, error} = useAsync<MovieInterface | null>(() => tmdb.findById(id), [id], null);
 
+    const movieTitleIfLoaded = movie && movie.title;
     const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
     const movieIfLoaded = movie && <MovieDetails movie={movie}/>;
+    const errorMessage = error && <p><IonIcon icon={build}></IonIcon>An error occurred while displaying this movie.</p>;
+
+    if (error) {
+        console.warn(error);
+    }
+
     return (
         <IonPage>
             <IonHeader>
@@ -30,13 +40,13 @@ export default function MovieDetailsPage(): JSX.Element {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="#"></IonBackButton>
                     </IonButtons>
-                    {/*TODO Fix type error ?*/}
-                    <IonTitle>Search result : {movie?.title}</IonTitle>
+                    <IonTitle>Search result : {movieTitleIfLoaded}</IonTitle>
                     {progressBarIfLoading}
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
                 {movieIfLoaded}
+                {errorMessage}
             </IonContent>
         </IonPage>
     );

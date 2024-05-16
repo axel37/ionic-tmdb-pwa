@@ -1,5 +1,6 @@
 import {ConfigurationResponse, MovieDb} from "moviedb-promise";
 import {Movie} from "../domain/Movie";
+import {MovieInterface} from "../domain/MovieInterface";
 
 class Tmdb {
     private static instance: Tmdb;
@@ -30,7 +31,7 @@ class Tmdb {
         return Tmdb.instance;
     }
 
-    public async findById(id: string | number): Promise<Movie> {
+    public async findById(id: string | number): Promise<MovieInterface> {
         if (this.movieCache.has(String(id))) {
             console.log(`Found cached movie with id ${id}`);
             return this.movieCache.get(String(id));
@@ -42,7 +43,7 @@ class Tmdb {
         return movie;
     }
 
-    public async searchMovies(search: string): Promise<Movie[]> {
+    public async searchMovies(search: string): Promise<MovieInterface[]> {
         if (this.searchCache.has(search)) {
             console.log(`Found cache results for search ${search}`);
             return this.searchCache.get(search);

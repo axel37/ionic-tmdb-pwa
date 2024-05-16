@@ -17,7 +17,7 @@ import useAsync from "../../hooks/useAsync";
 
 export default function Search() {
     const [query, setQuery] = useState<string>('');
-    const {data: movies, isLoading} = useAsync(() => tmdb.searchMovies(query), [query]);
+    const {data: movies, isLoading} = useAsync(() => tmdb.searchMovies(query), [query], []);
 
     const handleInput = (ev: Event) => {
         const target = ev.target as HTMLIonSearchbarElement;
@@ -29,7 +29,7 @@ export default function Search() {
 
     const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
     // Todo : Fix type error
-    const movieListItems = movies && movies.map(movie => (
+    const movieListItems = movies.map(movie => (
         <MovieListItem movie={movie}></MovieListItem>
     ));
     return (

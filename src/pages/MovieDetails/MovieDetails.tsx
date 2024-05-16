@@ -1,8 +1,6 @@
-import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import tmdb from "../../service/Tmdb";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
-import {MovieInterface} from "../../domain/MovieInterface";
 import {
     IonBackButton,
     IonButtons,
@@ -13,6 +11,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/react";
+import useAsync from "../../hooks/useAsync";
 
 interface RouteParams {
     id: string;
@@ -20,17 +19,9 @@ interface RouteParams {
 
 export default function MovieDetailsPage(): JSX.Element {
     const {id} = useParams<RouteParams>();
-    const [movie, setMovie] = useState<MovieInterface | null>(null);
+    const {data: movie, isLoading} = useAsync(() => tmdb.findById(id), [id]);
 
-    useEffect(() => {
-        const fetchMovie = async () => {
-            const movie = await tmdb.findById(id);
-            setMovie(movie);
-        };
-        fetchMovie();
-    }, [id]);
-
-    const progressBarIfLoading = movie ? null : <IonProgressBar type="indeterminate"></IonProgressBar>;
+    const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
     const movieIfLoaded = movie && <MovieDetails movie={movie}/>;
     return (
         <IonPage>
@@ -39,6 +30,7 @@ export default function MovieDetailsPage(): JSX.Element {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="#"></IonBackButton>
                     </IonButtons>
+                    {/*TODO Fix type error ?*/}
                     <IonTitle>Search result : {movie?.title}</IonTitle>
                     {progressBarIfLoading}
                 </IonToolbar>

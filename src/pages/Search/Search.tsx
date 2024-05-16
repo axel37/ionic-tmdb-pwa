@@ -9,25 +9,15 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import MovieListItem from "../../components/MovieListItem/MovieListItem";
 import tmdb from "../../service/Tmdb";
-import {Movie} from "../../domain/Movie";
 import TmdbCredits from "../../components/TmdbCredits/TmdbCredits";
+import useAsync from "../../hooks/useAsync";
 
 export default function Search() {
-    const [movies, setMovies] = useState<Movie[]>([]);
     const [query, setQuery] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    useEffect(() => {
-        const fetchMovies = async () => {
-            setIsLoading(true);
-            setMovies(await tmdb.searchMovies(query));
-            setIsLoading(false)
-        };
-        fetchMovies();
-    }, [query]); // Run effect whenever query changes
+    const {data: movies, isLoading} = useAsync(() => tmdb.searchMovies(query), [query]);
 
     const handleInput = (ev: Event) => {
         const target = ev.target as HTMLIonSearchbarElement;
@@ -38,7 +28,8 @@ export default function Search() {
     }
 
     const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
-    const movieListItems = movies.map(movie => (
+    // Todo : Fix type error
+    const movieListItems = movies && movies.map(movie => (
         <MovieListItem movie={movie}></MovieListItem>
     ));
     return (

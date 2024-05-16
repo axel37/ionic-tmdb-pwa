@@ -37,6 +37,10 @@ export default function Search() {
         }
     }
 
+    const progressBarIfLoading = isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>;
+    const movieListItems = movies.map(movie => (
+        <MovieListItem movie={movie}></MovieListItem>
+    ));
     return (
         <IonPage>
             <IonHeader>
@@ -51,14 +55,12 @@ export default function Search() {
                         onIonInput={(ev) => handleInput(ev)}
                     >
                     </IonSearchbar>
-                    {isLoading && <IonProgressBar type="indeterminate"></IonProgressBar>}
+                    {progressBarIfLoading}
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
                 <IonList>
-                    {movies.map(movie => (
-                        <MovieListItem movie={movie}></MovieListItem>
-                    ))}
+                    {movieListItems}
                 </IonList>
             </IonContent>
             <IonFooter>

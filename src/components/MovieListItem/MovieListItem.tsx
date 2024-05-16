@@ -7,15 +7,14 @@ interface Props {
 }
 
 export default function MovieListItem({movie}: Props) {
+    const movieThumbnail = movie.has_poster ?
+        <IonImg src={movie.poster_url_thumb} aria-hidden="true" alt=""/>
+        : <IonIcon icon={image} aria-hidden="true" size="large"></IonIcon>;
     return (
         <IonItem key={movie.id} button={true} detail={true} routerLink={`/movie/${movie.id}`}>
             <IonThumbnail slot="start">
-                {movie.has_poster ?
-                    <IonImg src={movie.poster_url_thumb} aria-hidden="true" alt=""/>
-                    : <IonIcon icon={image} aria-hidden="true" size="large"></IonIcon>
-                }
+                {movieThumbnail}
             </IonThumbnail>
-
             <IonLabel>
                 {movie.title}
             </IonLabel>

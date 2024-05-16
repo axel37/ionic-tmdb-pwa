@@ -30,6 +30,8 @@ export default function MovieDetailsPage(): JSX.Element {
         fetchMovie();
     }, [id]);
 
+    const progressBarIfLoading = movie ? null : <IonProgressBar type="indeterminate"></IonProgressBar>;
+    const movieIfLoaded = movie && <MovieDetails movie={movie}/>;
     return (
         <IonPage>
             <IonHeader>
@@ -38,11 +40,11 @@ export default function MovieDetailsPage(): JSX.Element {
                         <IonBackButton defaultHref="#"></IonBackButton>
                     </IonButtons>
                     <IonTitle>Search result : {movie?.title}</IonTitle>
-                    {movie ? null : <IonProgressBar type="indeterminate"></IonProgressBar>}
+                    {progressBarIfLoading}
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
-                {movie && <MovieDetails movie={movie}/>}
+                {movieIfLoaded}
             </IonContent>
         </IonPage>
     );
